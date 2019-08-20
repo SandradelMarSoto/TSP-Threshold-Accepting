@@ -11,12 +11,10 @@ class Graph<T, E> {
         nodes[a] = Node(a, info, null)
     }
 
-    fun addNodes(c: Collection<Pair<T, E>>) = c.forEach { addNode(it.first, it.second) }
-
     fun getNodeInfo(a: T): E? = if (nodes.contains(a)) nodes[a]!!.info else null
 
     fun addEdge(a: T, b: T, weight: Double) {
-        if (nodes.contains(a) and nodes.contains(b)) {
+        if (nodes.containsKey(a) && nodes.containsKey(b)) {
             nodes[a]?.apply {
                 neighbors = hashMapOf()
                 neighbors!![b] = weight
@@ -27,8 +25,9 @@ class Graph<T, E> {
             }
 
             distancesMaxHeap.add(weight)
+        } else{
+            throw IllegalArgumentException("Tha graph doesn't contain such nodes")
         }
-        throw IllegalArgumentException("Tha graph doesn't contain such nodes")
     }
 
     fun size(): Int = nodes.size
