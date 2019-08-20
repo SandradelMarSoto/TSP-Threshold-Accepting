@@ -5,7 +5,7 @@ import kotlin.math.*
 
 private const val EARTH_RADIUS_IN_METERS = 6373000.0
 
-class Tsp<T>(private val graph: Graph<T, City>) {
+class TSP<T>(private val graph: Graph<T, City>) {
 
     private fun augmentedCostFunction(u: T, v: T): Double =
         if (graph.hasEdge(u, v))
