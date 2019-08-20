@@ -12,26 +12,28 @@ private const val dbUrl = "jdbc:sqlite:db/tsp.db"
 class DbConnector {
 
     companion object {
-        fun getCity(id: Int): City? {
+        fun getCities(): ArrayList<City> {
+            val cities = arrayListOf<City>()
+
             val connection: Connection?
             val statement: Statement?
-            var city: City? = null
 
             try {
                 connection = DriverManager.getConnection(dbUrl)
                 connection.autoCommit = false
 
                 statement = connection.createStatement()
-                val resultSet = statement.executeQuery("SELECT * FROM cities WHERE id = $id")
+                val resultSet = statement.executeQuery("SELECT * FROM cities")
 
-                if (resultSet.next()) {
+                while (resultSet.next()) {
+                    val id = resultSet.getInt("id")
                     val name = resultSet.getString("name")
                     val country = resultSet.getString("country")
                     val population = resultSet.getInt("population")
                     val latitude = resultSet.getDouble("latitude")
                     val longitude = resultSet.getDouble("longitude")
 
-                    city = City(id, name, country, population, latitude, longitude)
+                    cities.add(City(id, name, country, population, latitude, longitude))
                 }
 
                 resultSet.close()
@@ -41,13 +43,14 @@ class DbConnector {
                 println(e.message)
             }
 
-            return city
+            return cities
         }
 
-        fun getConnectionBetweenTwoCities(id1: Int, id2: Int): CityConnection? {
+        fun getConnectionsBetweenTwoCities(): ArrayList<CityConnection> {
+            val cityConnections = arrayListOf<CityConnection>()
+
             val connection: Connection?
             val statement: Statement?
-            var cityConnection: CityConnection? = null
 
             try {
                 connection = DriverManager.getConnection(dbUrl)
@@ -55,12 +58,14 @@ class DbConnector {
 
                 statement = connection.createStatement()
                 val resultSet =
-                    statement.executeQuery("SELECT * FROM connections WHERE id_city_1 = $id1 AND id_city_2 = $id2")
+                    statement.executeQuery("SELECT * FROM connections")
 
-                if (resultSet.next()) {
+                while (resultSet.next()) {
+                    val idCity1 = resultSet.getInt("id_city_1")
+                    val idCity2 = resultSet.getInt("id_city_2")
                     val distance = resultSet.getDouble("distance")
 
-                    cityConnection = CityConnection(id1, id1, distance)
+                    cityConnections.add(CityConnection(idCity1, idCity2, distance))
                 }
 
                 resultSet.close()
@@ -70,7 +75,7 @@ class DbConnector {
                 println(e.message)
             }
 
-            return cityConnection
+            return cityConnections
         }
     }
 

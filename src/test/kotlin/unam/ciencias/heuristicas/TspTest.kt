@@ -4,59 +4,58 @@ import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 import unam.ciencias.heuristicas.algorithm.Graph
 import unam.ciencias.heuristicas.algorithm.TSP
+import unam.ciencias.heuristicas.data.DbConnector
 import unam.ciencias.heuristicas.model.City
+import unam.ciencias.heuristicas.model.CityConnection
 import kotlin.test.assertFalse
 
 
 object TspTest : Spek({
     Feature("Evaluate permutation for TSP") {
 
-        Scenario("Instance of TSP with 40 cities)") {
+        Scenario("Parse input of the TSP instance") {
 
-            Given("A database with the cities") {
+            val graph = Graph<Int, City>()
 
-            }
-            And("A database with the connections between cities"){
+            val tspInstance =
+                """
+                1,2,3,4,5,6,7,75,163,164,165,168,172,327,329,331,332,333,489,490,491,492,493,496,652,653,654,
+                656,657,792,815,816,817,820,978,979,980,981,982,984
+                """.trimIndent().replace("\n", "").split(",").map { it.toInt() }
 
-            }
-
-            val adjacencyCitiesIdsList = mutableListOf<Int>()
-
-            lateinit var graph: Graph<Int, City>
             lateinit var tsp: TSP<Int>
 
-            When("Initialize graph and TSP") {
-                val rawStr =
-                    """
-                        1,2,3,4,5,6,7,75,163,164,165,168,172,327,329,331,332,333,489,490,491,492,493,496,652,653,654,
-                        656,657,792,815,816,817,820,978,979,980,981,982,984
-                    """.trimIndent().replace("\n", "")
+            Given("A database with the cities, populate the graph with them") {
+                DbConnector.getCities().forEach { graph.addNode(it.id, it) }
 
-                rawStr.split(",").map { it.toInt() }.forEach { adjacencyCitiesIdsList.add(it) }
+                DbConnector.getConnectionsBetweenTwoCities()
+                    .forEach { graph.addEdge(it.idCity1, it.idCity2, it.distance) }
+            }
 
-                for (x in adjacencyCitiesIdsList) {
-                    graph.addNode(x, City("", "", .0, .0))
-                }
-
+            And("Create an Instance of TSP") {
+                tsp = TSP(graph, ArrayList(tspInstance))
             }
 
             Then("Must be the same cost function") {
                 val costFunction = 4526237.801017570309341
+                println(tsp.costFunction())
                 assertFalse { costFunction.equals(-1) }
             }
 
             And("Must be the same max distance") {
                 val maxDistance = 4970123.959999999962747
+                println(tsp.maxDistance())
                 assertFalse { maxDistance.equals(-1) }
             }
 
             And("Must be the same normalizer") {
                 val normalizer = 182907823.060000002384186
+                println(tsp.normalizer())
                 assertFalse { normalizer.equals(-1) }
             }
 
         }
-
+        /*
         Scenario("Many cities (150)") {
             val adjacencyCitiesIdsList = mutableListOf<Int>()
 
@@ -89,5 +88,6 @@ object TspTest : Spek({
                 assertFalse { normalizer.equals(-1) }
             }
         }
+        */
     }
 })

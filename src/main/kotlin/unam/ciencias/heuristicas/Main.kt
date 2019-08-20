@@ -6,6 +6,6 @@ import unam.ciencias.heuristicas.data.DbConnector
 
 
 fun main() {
-    println(DbConnector.getCity(1))
-    println(DbConnector.getConnectionBetweenTwoCities(3,11))
+    println(DbConnector.getCities())
+    //println(DbConnector.getConnectionsBetweenTwoCities())
 }

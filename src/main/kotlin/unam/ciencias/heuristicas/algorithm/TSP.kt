@@ -5,7 +5,10 @@ import kotlin.math.*
 
 private const val EARTH_RADIUS_IN_METERS = 6373000.0
 
-class TSP<T>(private val graph: Graph<T, City>) {
+class TSP<T>(
+    private val graph: Graph<T, City>,
+    private val tspInstance: ArrayList<T>
+) {
 
     private fun augmentedCostFunction(u: T, v: T): Double =
         if (graph.hasEdge(u, v))
@@ -25,17 +28,18 @@ class TSP<T>(private val graph: Graph<T, City>) {
         val r = EARTH_RADIUS_IN_METERS
         val c = 2 * atan2(sqrt(a), sqrt(1 - a))
 
+        println(c*r)
         return c * r
     }
 
-    fun feasibleSolution(permutation: ArrayList<T>): Boolean = graph.existSuchPath(permutation)
+    fun feasibleSolution(): Boolean = graph.existSuchPath(tspInstance)
 
     //TODO: este sí
-    fun costFunction(permutation: ArrayList<T>): Double {
+    fun costFunction(): Double {
         val pathWeightSum =
-            (0 until permutation.size - 1).sumByDouble { augmentedCostFunction(permutation[it], permutation[it + 1]) }
+            (0 until tspInstance.size - 1).sumByDouble { augmentedCostFunction(tspInstance[it], tspInstance[it + 1]) }
 
-        return pathWeightSum/normalizer()
+        return pathWeightSum / normalizer()
     }
 
     //TODO: este sí
