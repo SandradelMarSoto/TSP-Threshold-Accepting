@@ -2,16 +2,30 @@ package unam.ciencias.heuristicas
 
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
+import unam.ciencias.heuristicas.algorithm.Graph
+import unam.ciencias.heuristicas.algorithm.TSP
+import unam.ciencias.heuristicas.model.City
 import kotlin.test.assertFalse
 
 
 object TspTest : Spek({
     Feature("Evaluate permutation for TSP") {
 
-        Scenario("Few cities (40)") {
+        Scenario("Instance of TSP with 40 cities)") {
+
+            Given("A database with the cities") {
+
+            }
+            And("A database with the connections between cities"){
+
+            }
+
             val adjacencyCitiesIdsList = mutableListOf<Int>()
 
-            When("Split raw string and collect cities id") {
+            lateinit var graph: Graph<Int, City>
+            lateinit var tsp: TSP<Int>
+
+            When("Initialize graph and TSP") {
                 val rawStr =
                     """
                         1,2,3,4,5,6,7,75,163,164,165,168,172,327,329,331,332,333,489,490,491,492,493,496,652,653,654,
@@ -19,6 +33,11 @@ object TspTest : Spek({
                     """.trimIndent().replace("\n", "")
 
                 rawStr.split(",").map { it.toInt() }.forEach { adjacencyCitiesIdsList.add(it) }
+
+                for (x in adjacencyCitiesIdsList) {
+                    graph.addNode(x, City("", "", .0, .0))
+                }
+
             }
 
             Then("Must be the same cost function") {
