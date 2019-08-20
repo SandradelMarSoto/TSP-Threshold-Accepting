@@ -5,17 +5,13 @@ import java.util.*
 
 class Graph<T, E> {
     private val nodes = hashMapOf<T, Node<T, E>>()
-    //TODO: hacer que las distancias sea un par donde la promera entrada sea la distancia con un doubke
-    //TODO: y la segunda que se las aristas
     val distancesMaxHeap = PriorityQueue<Double>(Collections.reverseOrder())
 
     fun addNode(a: T, info: E) {
         nodes[a] = Node(a, info, null)
     }
 
-    fun addNodes(c: Collection<Pair<T, E>>) {
-        c.forEach { addNode(it.first, it.second) }
-    }
+    fun addNodes(c: Collection<Pair<T, E>>) = c.forEach { addNode(it.first, it.second) }
 
     fun getNodeInfo(a: T): E? = if (nodes.contains(a)) nodes[a]!!.info else null
 
@@ -32,8 +28,10 @@ class Graph<T, E> {
 
             distancesMaxHeap.add(weight)
         }
-        throw IllegalAccessException("Tha graph doesn't contain such nodes")
+        throw IllegalArgumentException("Tha graph doesn't contain such nodes")
     }
+
+    fun size(): Int = nodes.size
 
     fun hasEdge(a: T, b: T): Boolean =
         nodes.contains(a) && nodes[a]!!.neighbors != null && nodes[a]!!.neighbors!!.contains(b)
@@ -42,15 +40,25 @@ class Graph<T, E> {
         if (hasEdge(a, b)) nodes[a]!!.neighbors!![b]
         else null
 
+    fun existSuchPath(path: ArrayList<T>): Boolean {
+        for (i in 0 until path.size - 1) {
+            if (!hasEdge(path[i], path[i + 1]))
+                return false
+        }
+        return true
+    }
+
     private data class Node<T, E>(
         val id: T,
         val info: E,
         var neighbors: HashMap<T, Double>?
     )
 
+/*
     private data class Edge<T>(
         val a: T,
         val b: T,
         val weight: Double
     )
+*/
 }
