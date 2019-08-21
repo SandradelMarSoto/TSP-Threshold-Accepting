@@ -40,14 +40,14 @@ object TspTest : Spek({
                 assertTrue { tsp.normalizer() == normalizer }
             }
 
-            Then("Must be the same max distance") {
+            And("Must be the same max distance") {
                 val maxDistance = 4970123.959999999962747
-                assertTrue { maxDistance == tsp.maxDistance() }
+                assertTrue { tsp.maxDistance() == maxDistance }
             }
 
             And("Must be the same cost function") {
                 val costFunction = 4526237.801017570309341
-                assertTrue { costFunction == tsp.costFunction() }
+                assertTrue { tsp.costFunction() == costFunction }
             }
 
         }
@@ -84,9 +84,9 @@ object TspTest : Spek({
                 assertTrue { tsp.normalizer() == normalizer }
             }
 
-            Then("Must be the same max distance") {
+            And("Must be the same max distance") {
                 val maxDistance = 4978506.480000000447035
-                assertTrue { maxDistance == tsp.maxDistance() }
+                assertTrue { tsp.maxDistance() == maxDistance }
             }
 
             And("Must be the same cost function") {
@@ -95,7 +95,7 @@ object TspTest : Spek({
                 val costFunctionWithLessPrecision = String.format("%.7f", costFunction).toDouble()
                 val tspCostFunctionWithLessPrecision = String.format("%.7f", tsp.costFunction()).toDouble()
 
-                assertTrue { costFunctionWithLessPrecision == tspCostFunctionWithLessPrecision }
+                assertTrue { tspCostFunctionWithLessPrecision == costFunctionWithLessPrecision }
             }
 
         }
