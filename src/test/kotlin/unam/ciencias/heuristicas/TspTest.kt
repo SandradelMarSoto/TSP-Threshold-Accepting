@@ -6,7 +6,6 @@ import unam.ciencias.heuristicas.algorithm.Graph
 import unam.ciencias.heuristicas.algorithm.TSP
 import unam.ciencias.heuristicas.data.DbConnector
 import unam.ciencias.heuristicas.model.City
-import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 
@@ -48,8 +47,6 @@ object TspTest : Spek({
 
             And("Must be the same cost function") {
                 val costFunction = 4526237.801017570309341
-                println(tsp.costFunction())
-                //assertFalse { costFunction.equals(-1) }
                 assertTrue { costFunction == tsp.costFunction() }
             }
 
@@ -94,9 +91,11 @@ object TspTest : Spek({
 
             And("Must be the same cost function") {
                 val costFunction = 6210491.034747813828290
-                println(tsp.costFunction())
-                //assertFalse { costFunction.equals(-1) }
-                assertTrue { costFunction == tsp.costFunction() }
+
+                val costFunctionWithLessPrecision = String.format("%.7f", costFunction).toDouble()
+                val tspCostFunctionWithLessPrecision = String.format("%.7f", tsp.costFunction()).toDouble()
+
+                assertTrue { costFunctionWithLessPrecision == tspCostFunctionWithLessPrecision }
             }
 
         }

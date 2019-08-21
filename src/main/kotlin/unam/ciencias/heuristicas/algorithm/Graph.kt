@@ -15,14 +15,14 @@ class Graph<T, E> {
 
     fun addEdge(a: T, b: T, weight: Double) {
         if (a in nodes && b in nodes) {
-            nodes[a]?.apply {
-                neighbors = hashMapOf()
-                neighbors!![b] = weight
-            }
-            nodes[b]?.apply {
-                neighbors = hashMapOf()
-                neighbors!![a] = weight
-            }
+            if (nodes[a]!!.neighbors == null)
+                nodes[a]!!.neighbors = hashMapOf()
+            if (nodes[b]!!.neighbors == null)
+                nodes[b]!!.neighbors = hashMapOf()
+
+            nodes[a]!!.neighbors!![b] = weight
+            nodes[b]!!.neighbors!![a] = weight
+
             edges.add(Edge(a, b, weight))
         } else {
             throw IllegalArgumentException("Tha graph doesn't contain such nodes")
