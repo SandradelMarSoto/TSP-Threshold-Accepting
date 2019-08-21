@@ -15,12 +15,12 @@
 * SQLite: `SQLite version 3.24.0 2018-06-04 14:10:15`
 
 # Ejecución
-Para ejecutar pruebas unitarias
+Para ejecutar el programa (solo tiene imprime en pantalla las ciudades y ya)
 ```bash
 $ ./gradlew run
 ```
 
-Para ejecutar el programa (solo tiene imprime en pantalla las ciudades y ya)
+Para ejecutar las pruebas unitarias
 ```bash
 $ ./gradlew test 
 ```
