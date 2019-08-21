@@ -5,16 +5,16 @@ import java.util.*
 
 class Graph<T, E> {
     private val nodes = hashMapOf<T, Node<T, E>>()
-    val edges = PriorityQueue<Edge<T>>(kotlin.Comparator { o1, o2 -> o2.weight.compareTo(o1.weight) })
+    val edges = PriorityQueue<Edge<T>>(Comparator { o1, o2 -> o2.weight.compareTo(o1.weight) })
 
     fun addNode(a: T, info: E) {
         nodes[a] = Node(a, info, null)
     }
 
-    fun getNodeInfo(a: T): E? = if (nodes.contains(a)) nodes[a]!!.info else null
+    fun getNodeInfo(a: T): E? = if (a in nodes) nodes[a]!!.info else null
 
     fun addEdge(a: T, b: T, weight: Double) {
-        if (nodes.containsKey(a) && nodes.containsKey(b)) {
+        if (a in nodes && b in nodes) {
             nodes[a]?.apply {
                 neighbors = hashMapOf()
                 neighbors!![b] = weight
@@ -32,7 +32,7 @@ class Graph<T, E> {
     fun size(): Int = nodes.size
 
     fun hasEdge(a: T, b: T): Boolean =
-        nodes.contains(a) && nodes[a]!!.neighbors != null && nodes[a]!!.neighbors!!.contains(b)
+        a in nodes && nodes[a]!!.neighbors != null && b in nodes[a]!!.neighbors!!
 
     fun edgeWeight(a: T, b: T): Double? =
         if (hasEdge(a, b)) nodes[a]!!.neighbors!![b]
