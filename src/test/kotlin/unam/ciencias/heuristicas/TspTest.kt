@@ -49,8 +49,8 @@ object TspTest : Spek({
             And("Must be the same cost function") {
                 val costFunction = 4526237.801017570309341
                 println(tsp.costFunction())
-                assertFalse { costFunction.equals(-1) }
-                //assertTrue { costFunction == tsp.costFunction() }
+                //assertFalse { costFunction.equals(-1) }
+                assertTrue { costFunction == tsp.costFunction() }
             }
 
         }
@@ -95,8 +95,8 @@ object TspTest : Spek({
             And("Must be the same cost function") {
                 val costFunction = 6210491.034747813828290
                 println(tsp.costFunction())
-                assertFalse { costFunction.equals(-1) }
-                //assertTrue { costFunction == tsp.costFunction() }
+                //assertFalse { costFunction.equals(-1) }
+                assertTrue { costFunction == tsp.costFunction() }
             }
 
         }
