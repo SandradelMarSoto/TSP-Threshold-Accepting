@@ -10,6 +10,7 @@ class TSP<T>(
     private val tspInstance: ArrayList<T>
 ) {
 
+
     private fun augmentedCostFunction(u: T, v: T): Double =
         if (graph.hasEdge(u, v))
             graph.edgeWeight(u, v)!!
@@ -28,7 +29,6 @@ class TSP<T>(
         val r = EARTH_RADIUS_IN_METERS
         val c = 2 * atan2(sqrt(a), sqrt(1 - a))
 
-        println(c*r)
         return c * r
     }
 
@@ -45,16 +45,16 @@ class TSP<T>(
     //TODO: este sí
     fun normalizer(): Double {
         var result = 0.0
-        for ((i, distance) in graph.distancesMaxHeap.withIndex()) {
+        for ((i, edge) in graph.edges.withIndex()) {
             if (i < graph.size())
                 break
-            result += distance
+            result += edge.weight
         }
         return result
     }
 
     //TODO: este sí
-    fun maxDistance(): Double = graph.distancesMaxHeap.peek()
+    fun maxDistance(): Double = graph.edges.peek().weight
 
     private fun rad(g: Double): Double = (g * Math.PI) / 180
 
