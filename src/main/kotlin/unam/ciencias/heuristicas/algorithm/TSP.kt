@@ -5,7 +5,11 @@ import kotlin.math.*
 
 private const val EARTH_RADIUS_IN_METERS = 6373000.0
 
-class TSP<T>(private val graph: Graph<T, City>) {
+class TSP<T>(
+    private val graph: Graph<T, City>,
+    private val tspInstance: ArrayList<T>
+) {
+    private val inducedGraph = graph.inducedGraph(tspInstance)
 
     private fun augmentedCostFunction(u: T, v: T): Double =
         if (graph.hasEdge(u, v))
@@ -14,43 +18,46 @@ class TSP<T>(private val graph: Graph<T, City>) {
             naturalDistance(u, v) * maxDistance()
 
     private fun naturalDistance(u: T, v: T): Double {
-        val latitudeU = rad(graph.getNodeInfo(u)!!.latitude)
-        val longitudeU = rad(graph.getNodeInfo(u)!!.longitude)
-        val latitudeV = rad(graph.getNodeInfo(v)!!.latitude)
-        val longitudeV = rad(graph.getNodeInfo(v)!!.latitude)
+        val latitudeU = rad(inducedGraph.getNodeInfo(u)!!.latitude)
+        val longitudeU = rad(inducedGraph.getNodeInfo(u)!!.longitude)
+        val latitudeV = rad(inducedGraph.getNodeInfo(v)!!.latitude)
+        val longitudeV = rad(inducedGraph.getNodeInfo(v)!!.longitude)
 
         val a = sin((latitudeV - latitudeU) / 2).pow(2) +
-                (cos(latitudeU) * cos(latitudeV) * sin((longitudeV - longitudeU) / 2).pow(2))
+                cos(latitudeU) * cos(latitudeV) * sin((longitudeV - longitudeU) / 2).pow(2)
 
         val r = EARTH_RADIUS_IN_METERS
         val c = 2 * atan2(sqrt(a), sqrt(1 - a))
 
-        return c * r
+        return r * c
     }
 
-    fun feasibleSolution(permutation: ArrayList<T>): Boolean = graph.existSuchPath(permutation)
+    fun feasibleSolution(): Boolean = graph.existSuchPath(tspInstance)
 
-    //TODO: este sí
-    fun costFunction(permutation: ArrayList<T>): Double {
-        val pathWeightSum =
-            (0 until permutation.size - 1).sumByDouble { augmentedCostFunction(permutation[it], permutation[it + 1]) }
+    fun costFunction(): Double {
+        var pathWeightSum = 0.0
 
-        return pathWeightSum/normalizer()
+        for (i in 0 until tspInstance.size - 1)
+            pathWeightSum += augmentedCostFunction(tspInstance[i], tspInstance[i + 1])
+
+        return pathWeightSum / normalizer()
     }
 
-    //TODO: este sí
     fun normalizer(): Double {
         var result = 0.0
-        for ((i, distance) in graph.distancesMaxHeap.withIndex()) {
-            if (i < graph.size())
+
+        val orderedWeights = ArrayList(inducedGraph.edges)
+        orderedWeights.sortWith(Comparator { o1, o2 -> o2.weight.compareTo(o1.weight) })
+
+        for ((i, edge) in orderedWeights.withIndex()) {
+            if (i > inducedGraph.size() - 2)
                 break
-            result += distance
+            result += edge.weight
         }
         return result
     }
 
-    //TODO: este sí
-    fun maxDistance(): Double = graph.distancesMaxHeap.peek()
+    fun maxDistance(): Double = inducedGraph.edges.peek().weight
 
     private fun rad(g: Double): Double = (g * Math.PI) / 180
 
