@@ -1,13 +1,15 @@
 package unam.ciencias.heuristicas.heuristic
 
 /**
+ * TODO
  *
+ * @property path
  */
-class Solution<T>(
-    val path: ArrayList<T>
+class Solution(
+    val path: ArrayList<Int>
 ) {
 
-    fun neighbors(s: Solution<T>): Boolean {
+    fun neighbors(s: Solution): Boolean {
         var swaps = 0
         for (i in 0 until path.size) {
             if (this.path[i] != s.path[i]) swaps++
@@ -15,7 +17,7 @@ class Solution<T>(
         return swaps == 2
     }
 
-    fun generateNeighbor(): Solution<T> {
+    fun generateNeighbor(): Solution {
         // Both inclusive
         val n = path.size
 
@@ -30,12 +32,12 @@ class Solution<T>(
         newPath[uIndex] = newPath[vIndex]
         newPath[vIndex] = auxIndex
 
-        return Solution<T>(newPath)
+        return Solution(newPath)
     }
 
     companion object {
-        fun <T> getInitialSolution(elems: Collection<T>): Solution<T> {
-            val path = ArrayList<T>(elems)
+        fun getInitial(elems: Collection<Int>): Solution {
+            val path = ArrayList(elems)
             path.shuffle()
             return Solution(path)
         }

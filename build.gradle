@@ -42,4 +42,4 @@ compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
 
-mainClassName = "unam.ciencias.heuristicas.Test"
+mainClassName = "unam.ciencias.heuristicas.Main"

@@ -7,8 +7,13 @@ import java.sql.DriverManager
 import java.sql.SQLException
 import java.sql.Statement
 
+// FIXME: dynamic path for the db.
 private const val dbUrl = "jdbc:sqlite:db/tsp.db"
 
+/**
+ * TODO
+ *
+ */
 class DbConnector {
 
     companion object {

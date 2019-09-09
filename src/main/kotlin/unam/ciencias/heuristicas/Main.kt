@@ -1,11 +1,8 @@
-@file:JvmName("Test")
+@file:JvmName("Main")
 
 package unam.ciencias.heuristicas
 
-import unam.ciencias.heuristicas.data.DbConnector
-
 
 fun main() {
-    println(DbConnector.getCities())
-    //println(DbConnector.getConnectionsBetweenTwoCities())
+    println("Hello Canek :-)")
 }
