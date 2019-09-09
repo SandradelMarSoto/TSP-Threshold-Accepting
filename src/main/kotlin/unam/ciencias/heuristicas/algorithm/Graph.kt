@@ -2,7 +2,12 @@ package unam.ciencias.heuristicas.algorithm
 
 import java.util.*
 
-
+/**
+ * Weighted undirected graph.
+ *
+ * @param T The identifier of the node.
+ * @param E The data it's going to store each node in it.
+ */
 class Graph<T, E> {
     private val nodes = hashMapOf<T, Node<T, E>>()
     val edges = PriorityQueue<Edge<T>>(Comparator { o1, o2 -> o2.weight.compareTo(o1.weight) })
@@ -10,6 +15,8 @@ class Graph<T, E> {
     fun addNode(a: T, info: E) {
         nodes[a] = Node(a, info, null)
     }
+
+    fun getNodes() = nodes.keys
 
     fun getNodeInfo(a: T): E? = if (a in nodes) nodes[a]!!.info else null
 
