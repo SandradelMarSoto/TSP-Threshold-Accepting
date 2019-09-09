@@ -17,7 +17,7 @@ class Metrologist(
     private val cities: ArrayList<Int>
 ) {
     /** The induced graph built with the [graph] using the [cities] as vertices. */
-    private val inducedGraph = graph.inducedGraph(cities)
+    val inducedGraph = graph.inducedGraph(cities)
 
     private fun augmentedCostFunction(u: Int, v: Int): Double =
         if (graph.hasEdge(u, v))

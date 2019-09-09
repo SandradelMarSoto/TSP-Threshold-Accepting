@@ -17,6 +17,12 @@ class Solution(
         return swaps == 2
     }
 
+    /**
+     * TODO
+     * FIXME: Improve it.
+     *
+     * @return
+     */
     fun generateNeighbor(): Solution {
         // Both inclusive
         val n = path.size
@@ -36,6 +42,12 @@ class Solution(
     }
 
     companion object {
+        /**
+         * TODO
+         *
+         * @param elems
+         * @return
+         */
         fun getInitial(elems: Collection<Int>): Solution {
             val path = ArrayList(elems)
             path.shuffle()

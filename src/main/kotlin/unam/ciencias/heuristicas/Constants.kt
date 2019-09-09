@@ -1,5 +1,9 @@
 package unam.ciencias.heuristicas
 
+/**
+ * TODO
+ *
+ */
 class Constants {
     companion object {
 
@@ -8,7 +12,7 @@ class Constants {
         /** TODO */
         const val EPSILON_P = 10e-7
         /** TODO */
-        const val T = 8
+        const val T = 8.0
         /** TODO */
         const val L: Double = 10e7
         /** TODO */
@@ -22,8 +26,10 @@ class Constants {
          * @return
          */
         fun randomPercentage(): Double {
-            //FIXME: [0.85, 0.95]
-            return Math.random()
+            var aux = Math.random()
+            while (aux !in 0.85..0.95)
+                aux = Math.random()
+            return aux
         }
 
     }

@@ -1,19 +1,25 @@
 package unam.ciencias.heuristicas.heuristic
 
-import unam.ciencias.heuristicas.Constants
+import unam.ciencias.heuristicas.Constants.Companion.L
 import unam.ciencias.heuristicas.algorithm.Metrologist
 
 
 class Batch(
     private var solution: Solution,
-    private var temperature: Double,
+    private val temperature: Double,
     private val metrologist: Metrologist
 ) {
 
+    /**
+     * TODO
+     *
+     * @return Pair whose first entry is the average of the accepted solutions, and the second
+     *         entry contains the last solution found.
+     */
     fun calculateBatch(): Pair<Double, Solution> {
         var c = 0
         var r = 0.0
-        while (c < Constants.L) {
+        while (c < L) {
             val neighbor = solution.generateNeighbor()
             if (metrologist.costFunction(neighbor) < metrologist.costFunction(solution) + temperature) {
                 solution = neighbor
@@ -21,7 +27,7 @@ class Batch(
                 r += metrologist.costFunction(neighbor)
             }
         }
-        return Pair(r / Constants.L, solution)
+        return Pair(r / L, solution)
     }
 
 }
