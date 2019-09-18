@@ -1,23 +1,23 @@
 package unam.ciencias.heuristicas
 
 /**
- * TODO
+ * Static variables that use the our TSP system.
  *
  */
 class Constants {
     companion object {
 
         /** TODO */
-        const val EPSILON = 10e-7
+        const val EPSILON = 10e-2
         /** TODO */
-        const val EPSILON_P = 10e-7
-        /** TODO */
+        const val EPSILON_P = 10e-2
+        /** Initial system temperature */
         const val T = 8.0
-        /** TODO */
-        const val L: Double = 10e7
-        /** TODO */
-        const val PHI = 0.5
-        /** TODO */
+        /** Upper bound for iterations when calculating a batch */
+        const val L: Int = 10e3.toInt()
+        /** Cooling factor that determines how slow or fast the temperature [T] it's going to decrease */
+        const val PHI = 0.90
+        /** Earth radius in meters */
         const val EARTH_RADIUS_IN_METERS = 6373000.0
 
         /**
