@@ -40,8 +40,6 @@ class Metrologist(
         return r * c
     }
 
-    fun feasibleSolution(): Boolean = graph.existSuchPath(cities)
-
     fun costFunction(solution: Solution): Double {
         val path = solution.path
 

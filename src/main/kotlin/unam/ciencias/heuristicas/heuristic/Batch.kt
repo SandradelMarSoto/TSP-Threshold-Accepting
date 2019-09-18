@@ -4,6 +4,13 @@ import unam.ciencias.heuristicas.Constants.Companion.L
 import unam.ciencias.heuristicas.algorithm.Metrologist
 
 
+/**
+ * TODO
+ *
+ * @property solution
+ * @property temperature
+ * @property metrologist
+ */
 class Batch(
     private var solution: Solution,
     private val temperature: Double,
@@ -20,6 +27,7 @@ class Batch(
         var c = 0
         var r = 0.0
         while (c < L) {
+            // FIXME: No crear una nueva solución si no se va a ocupar.
             val neighbor = solution.generateNeighbor()
             if (metrologist.costFunction(neighbor) < metrologist.costFunction(solution) + temperature) {
                 solution = neighbor
