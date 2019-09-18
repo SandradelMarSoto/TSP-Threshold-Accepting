@@ -7,7 +7,6 @@ package unam.ciencias.heuristicas.heuristic
  */
 class Solution(val path: ArrayList<Int>) {
 
-
     /**
      * TODO
      * FIXME: Improve it.

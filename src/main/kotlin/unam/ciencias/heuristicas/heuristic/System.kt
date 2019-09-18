@@ -9,21 +9,24 @@ import kotlin.random.Random
  * Bunch of variables that are going to be stored and updated throughout the TSP heuristic.
  *
  * @property metrologist
+ * @property seed no-op
  */
-class System(private val metrologist: Metrologist) {
-
-    private val cities = metrologist.inducedGraph.getNodes()
-    val graphSize = metrologist.inducedGraph.size()
+class System(private val metrologist: Metrologist, private val seed: Int) {
 
     /** TODO */
     var solution = initialSolution()
     /** TODO */
-    var temperature = initialTemperature(solution, 0.9)
+    var temperature = initialTemperature(solution)
     /** TODO */
-    val random = Random(2)
+    val random = Random(seed)
 
-
+    /**
+     * TODO
+     *
+     * @return
+     */
     private fun initialSolution(): Solution {
+        val cities = metrologist.inducedGraph.getNodes()
         val path = ArrayList(cities)
         path.shuffle()
         return Solution(path)
@@ -32,12 +35,13 @@ class System(private val metrologist: Metrologist) {
     /**
      * TODO
      *
-     * @param probability
+     * @param solution
      * @return
      */
-    private fun initialTemperature(solution: Solution, probability: Double): Double {
+    private fun initialTemperature(solution: Solution): Double {
         var p = acceptedPercentage(solution, temperature)
         var temperature = Constants.T
+        val probability = Constants.P
 
         val t1: Double
         val t2: Double
@@ -62,9 +66,17 @@ class System(private val metrologist: Metrologist) {
         return binarySearch(solution, t1, t2, probability)
     }
 
+    /**
+     * TODO
+     *
+     * @param solution
+     * @param temperature
+     * @return
+     */
     private fun acceptedPercentage(solution: Solution, temperature: Double): Double {
         var c = 0
         val costFunction = { s: Solution -> metrologist.costFunction(s) }
+        val graphSize = metrologist.inducedGraph.size()
 
         for (i in 0 until graphSize) {
             val neighbor = solution.generateNeighbor()
@@ -76,6 +88,15 @@ class System(private val metrologist: Metrologist) {
         return c.toDouble() / graphSize
     }
 
+    /**
+     * TODO
+     *
+     * @param solution
+     * @param t1
+     * @param t2
+     * @param probability
+     * @return
+     */
     private tailrec fun binarySearch(solution: Solution, t1: Double, t2: Double, probability: Double): Double {
         val tMid = (t1 + t2) / 2
         if (t2 - t1 < Constants.EPSILON_P)

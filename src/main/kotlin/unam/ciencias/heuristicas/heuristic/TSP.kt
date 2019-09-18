@@ -10,8 +10,7 @@ import unam.ciencias.heuristicas.algorithm.Metrologist
  */
 class TSP(private val metrologist: Metrologist) {
 
-    private val system = System(metrologist)
-
+    private val system = System(metrologist, 666)
 
     /**
      * TODO
@@ -32,6 +31,7 @@ class TSP(private val metrologist: Metrologist) {
 
                 p = newAcceptedPercentage
                 system.solution = s
+
                 println(system.solution.path)
                 println(metrologist.costFunction(system.solution))
             }
@@ -39,17 +39,31 @@ class TSP(private val metrologist: Metrologist) {
         }
     }
 
+    /**
+     * FIXME
+     *
+     * @return
+     */
     fun calculatePath(): ArrayList<Int> {
         return arrayListOf()
     }
 
+    /**
+     * FIXME
+     *
+     * @return
+     */
     fun evaluation(): Double {
         return 0.0
     }
 
+    /**
+     * FIXME
+     *
+     * @return
+     */
     fun isFeasible(): Boolean {
         return false
     }
-
 
 }

@@ -19,6 +19,9 @@ class Constants {
         const val PHI = 0.90
         /** Earth radius in meters */
         const val EARTH_RADIUS_IN_METERS = 6373000.0
+        /** Probability */
+        const val P = 0.90
+
 
         /**
          * TODO
