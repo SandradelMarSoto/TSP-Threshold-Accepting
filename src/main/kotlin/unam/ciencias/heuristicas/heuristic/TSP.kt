@@ -20,16 +20,14 @@ class TSP(private val metrologist: Metrologist, private val seed: Int) {
      *
      */
     fun thresholdAccepting() {
-        val solution = system.solution
-        val temperature = system.temperature
 
         var p = 0.0
-        while (temperature > Constants.EPSILON) {
+        while (system.temperature > Constants.EPSILON) {
             var q = Double.POSITIVE_INFINITY
             while (p <= q) { // While there's no thermal equilibrium.
                 q = p
                 val (newAcceptedPercentage, s) = Batch(
-                    solution, temperature, metrologist
+                    system.solution, system.temperature, metrologist
                 ).calculateBatch()
 
                 p = newAcceptedPercentage
@@ -38,7 +36,8 @@ class TSP(private val metrologist: Metrologist, private val seed: Int) {
                 println(system.solution.path)
                 println(metrologist.costFunction(system.solution))
             }
-            system.temperature = Constants.PHI * temperature
+            println(">>"+ system.temperature)
+            system.temperature *= Constants.PHI
         }
     }
 

@@ -22,7 +22,7 @@ fun main() {
     println("Normalizer: ${metrologist.normalizer()}")
     println()
 
-    val tsp = TSP(metrologist, 666)
+    val tsp = TSP(metrologist, 129)
     tsp.thresholdAccepting()
 
     println("Path: ${tsp.calculatePath()}")
