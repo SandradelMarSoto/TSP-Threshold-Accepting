@@ -2,15 +2,18 @@ package unam.ciencias.heuristicas.heuristic
 
 import unam.ciencias.heuristicas.Constants
 import unam.ciencias.heuristicas.algorithm.Metrologist
+import kotlin.random.Random
 
 /**
  * TODO
  *
  * @property metrologist
+ * @property seed
  */
-class TSP(private val metrologist: Metrologist) {
+class TSP(private val metrologist: Metrologist, private val seed: Int) {
 
-    private val system = System(metrologist, 666)
+    private val random = Random(seed)
+    private val system = System(metrologist, random)
 
     /**
      * TODO

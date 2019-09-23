@@ -1,11 +1,13 @@
 package unam.ciencias.heuristicas.heuristic
 
+import kotlin.random.Random
+
 /**
  * TODO
  *
  * @property path
  */
-class Solution(val path: ArrayList<Int>) {
+class Solution(val path: ArrayList<Int>, private val random: Random) {
 
     /**
      * TODO
@@ -16,10 +18,10 @@ class Solution(val path: ArrayList<Int>) {
     fun generateNeighbor(): Solution {
         val n = path.size
 
-        val uIndex = (0 until n).random()
-        var vIndex = (0 until n).random()
+        val uIndex = (0 until n).random(this.random)
+        var vIndex = (0 until n).random(this.random)
         while (uIndex == vIndex)
-            vIndex = (0 until n).random()
+            vIndex = (0 until n).random(this.random)
 
         val newPath = ArrayList(path)
 
@@ -27,7 +29,7 @@ class Solution(val path: ArrayList<Int>) {
         newPath[uIndex] = newPath[vIndex]
         newPath[vIndex] = auxIndex
 
-        return Solution(newPath)
+        return Solution(newPath, this.random)
     }
 
 }

@@ -17,12 +17,12 @@ fun main() {
     val metrologist = Metrologist(graph, citiesIds)
 
     println("Cities: $citiesIds")
-    println("Evaluation: ${metrologist.costFunction(Solution(citiesIds))}")
+    //println("Evaluation: ${metrologist.costFunction(Solution(citiesIds))}")
     println("Max distance: ${metrologist.maxDistance()}")
     println("Normalizer: ${metrologist.normalizer()}")
     println()
 
-    val tsp = TSP(metrologist)
+    val tsp = TSP(metrologist, 666)
     tsp.thresholdAccepting()
 
     println("Path: ${tsp.calculatePath()}")

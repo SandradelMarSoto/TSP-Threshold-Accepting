@@ -11,14 +11,12 @@ import kotlin.random.Random
  * @property metrologist
  * @property seed no-op
  */
-class System(private val metrologist: Metrologist, private val seed: Int) {
+class System(private val metrologist: Metrologist, private val random: Random) {
 
     /** TODO */
     var solution = initialSolution()
     /** TODO */
     var temperature = initialTemperature(solution)
-    /** TODO */
-    val random = Random(seed)
 
     /**
      * TODO
@@ -28,8 +26,8 @@ class System(private val metrologist: Metrologist, private val seed: Int) {
     private fun initialSolution(): Solution {
         val cities = metrologist.inducedGraph.getNodes()
         val path = ArrayList(cities)
-        path.shuffle()
-        return Solution(path)
+        path.shuffle(this.random)
+        return Solution(path, this.random)
     }
 
     /**
