@@ -5,29 +5,40 @@ package unam.ciencias.heuristicas
 import unam.ciencias.heuristicas.algorithm.Graph
 import unam.ciencias.heuristicas.algorithm.Metrologist
 import unam.ciencias.heuristicas.data.DbConnector
-import unam.ciencias.heuristicas.heuristic.Solution
 import unam.ciencias.heuristicas.heuristic.TSP
 import unam.ciencias.heuristicas.model.City
+import java.io.File
 
 
-fun main() {
+fun main(args: Array<String>) {
+    // Initialize the graph from the db.
     val graph = initializeGraph()
 
-    val citiesIds = ArrayList(readLine()!!.split(",").map { it.toInt() })
+    // Read cities' ids and seeds from a file.
+    val citiesInput = File(args[0]).readLines()[0]
+    val seedsInput = File(args[1]).readLines()[0]
+
+    val citiesIds = ArrayList(citiesInput.split(",").map { it.toInt() })
+    val seeds = seedsInput.split(",").map { it.toInt() }
+
     val metrologist = Metrologist(graph, citiesIds)
 
     println("Cities: $citiesIds")
-    //println("Evaluation: ${metrologist.costFunction(Solution(citiesIds))}")
-    println("Max distance: ${metrologist.maxDistance()}")
-    println("Normalizer: ${metrologist.normalizer()}")
-    println()
 
-    val tsp = TSP(metrologist, 129)
-    tsp.thresholdAccepting()
+    for (seed in seeds) {
+        println("Seed: $seed")
+        //println("Evaluation: ${metrologist.costFunction(Solution(citiesIds))}")
+        println("Max distance: ${metrologist.maxDistance()}")
+        println("Normalizer: ${metrologist.normalizer()}")
+        println()
 
-    println("Path: ${tsp.calculatePath()}")
-    println("Evaluation: ${tsp.evaluation()}")
-    println("Feasible: ${tsp.isFeasible()}")
+        val tsp = TSP(metrologist, seed)
+        tsp.thresholdAccepting()
+
+        println("Path: ${tsp.calculatePath()}")
+        println("Evaluation: ${tsp.evaluation()}")
+        println("Feasible: ${tsp.isFeasible()}")
+    }
 }
 
 fun initializeGraph(): Graph<Int, City> {
