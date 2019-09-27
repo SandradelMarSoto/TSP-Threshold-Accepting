@@ -48,9 +48,20 @@ run {
     standardInput = System.in
 
     // We must pass these as flags to read those files.
-    args findProperty('cities')
-    args findProperty('seeds')
+    if (project.hasProperty("cities") && project.hasProperty("seeds")) {
+        args findProperty('cities')
+        args findProperty('seeds')
+    }
 }
 
 // Run this file as main
 mainClassName = "unam.ciencias.heuristicas.Main"
+
+task generateSeeds(type: JavaExec) {
+    main = "unam.ciencias.heuristicas.SeedGenerator"
+    classpath = sourceSets.main.runtimeClasspath
+
+    if (project.hasProperty("n")) {
+        args findProperty('n')
+    }
+}

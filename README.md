@@ -15,16 +15,23 @@
 * SQLite: `SQLite version 3.24.0 2018-06-04 14:10:15`
 
 # Ejecución
-Para ejecutar el programa (solo tiene imprime en pantalla las ciudades y ya)
+Se le tendrá que pasar un archivo con la lista de ciudades y otra con las semillas:
 ```bash
-$ ./gradlew run
+$ ./gradlew run -Pcities=[FILE] -Pseeds=[FILE]
+```
+Ejemplo:
+```bash
+$ ./gradlew run -Pcities=examples/input/40-cities.txt -Pseeds=examples/input/seed_1.txt
 ```
 
-El programa lee de la entrada estándar, lo que significa que podemos hacer esto:
+Tiene un archivo para generar semillas y su ejecución es así:
 ```bash
-$ ./gradlew run < examples/input/40-cities.txt
+$ ./gradlew generateSeeds -Pn='[N]'
 ```
-
+Ejemplo:
+```bash
+$ ./gradlew generateSeeds -Pn='1'
+```
 Se puede ver el formato de entrada en `examples/input/40-cities.txt`.
 
 
