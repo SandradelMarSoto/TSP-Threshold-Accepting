@@ -50,6 +50,17 @@ class Metrologist(
         return pathWeightSum / normalizer()
     }
 
+     // FIXME: quitar esto, pero solo es para las pruebas
+    fun costFunction(l: ArrayList<Int>): Double {
+
+        var pathWeightSum = 0.0
+        for (i in 0 until l.size - 1)
+            pathWeightSum += augmentedCostFunction(l[i], l[i + 1])
+
+        return pathWeightSum / normalizer()
+    }
+
+    // FIXME: memoize it.
     fun normalizer(): Double {
         var result = 0.0
 
