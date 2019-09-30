@@ -19,6 +19,9 @@ class Metrologist(
     /** The induced graph built with the [graph] using the [cities] as vertices. */
     val inducedGraph = graph.inducedGraph(cities)
 
+    /** TODO */
+    val normalizer = normalizer()
+
     private fun augmentedCostFunction(u: Int, v: Int): Double =
         if (graph.hasEdge(u, v))
             graph.edgeWeight(u, v)!!
@@ -119,21 +122,29 @@ class Metrologist(
             pathWeightSum += modifiedEdgeWeights
         }
 
-        return pathWeightSum / normalizer()
+        return pathWeightSum / normalizer
     }
 
-    // FIXME: quitar esto, pero solo es para las pruebas
+    /**
+     * TODO
+     *
+     * @param l
+     * @return
+     */
     fun costFunction(l: ArrayList<Int>): Double {
-
         var pathWeightSum = 0.0
         for (i in 0 until l.size - 1)
             pathWeightSum += augmentedCostFunction(l[i], l[i + 1])
 
-        return pathWeightSum / normalizer()
+        return pathWeightSum / normalizer
     }
 
-    // FIXME: memoize it.
-    fun normalizer(): Double {
+    /**
+     * TODO
+     *
+     * @return
+     */
+    private fun normalizer(): Double {
         var result = 0.0
 
         val orderedWeights = ArrayList(inducedGraph.edges)

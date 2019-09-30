@@ -55,7 +55,7 @@ object TspTest : Spek({
                 }
 
                 Then("Must be the same normalizer") {
-                    assertTrue { metrologist.normalizer() == normalizer }
+                    assertTrue { metrologist.normalizer == normalizer }
                 }
 
                 And("Must be the same max distance") {

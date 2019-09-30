@@ -29,7 +29,7 @@ fun main(args: Array<String>) {
         println("Seed: $seed")
         //println("Evaluation: ${metrologist.costFunction(Solution(citiesIds))}")
         println("Max distance: ${metrologist.maxDistance()}")
-        println("Normalizer: ${metrologist.normalizer()}")
+        println("Normalizer: ${metrologist.normalizer}")
         println()
 
         val tsp = TSP(metrologist, seed)
