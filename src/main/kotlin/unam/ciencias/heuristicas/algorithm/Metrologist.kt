@@ -40,17 +40,89 @@ class Metrologist(
         return r * c
     }
 
-    fun costFunction(solution: Solution): Double {
+    fun costFunction(solution: Solution, swappedIndices: Boolean = false): Double {
         val path = solution.path
 
         var pathWeightSum = 0.0
-        for (i in 0 until path.size - 1)
+
+        for (i in 0 until path.size - 1) {
             pathWeightSum += augmentedCostFunction(path[i], path[i + 1])
+        }
+
+        if (swappedIndices) {
+            val n = path.size - 1
+            val i = solution.swappedIndices!!.first
+            val j = solution.swappedIndices!!.second
+
+            var edgeWeightToRemove = 0.0
+            var modifiedEdgeWeights = 0.0
+
+            // If they are adjacents.
+            if (j - i == 1) {
+                if (i == 0) {
+                    edgeWeightToRemove = augmentedCostFunction(path[i], path[j]) +
+                            augmentedCostFunction(path[j], path[j + 1])
+
+                    modifiedEdgeWeights = augmentedCostFunction(path[j], path[i]) +
+                            augmentedCostFunction(path[i], path[j + 1])
+                } else if (i > 0 && j < n) {
+                    edgeWeightToRemove = augmentedCostFunction(path[i - 1], path[i]) +
+                            augmentedCostFunction(path[i], path[j]) +
+                            augmentedCostFunction(path[j], path[j + 1])
+
+                    modifiedEdgeWeights = augmentedCostFunction(path[i - 1], path[j]) +
+                            augmentedCostFunction(path[j], path[i]) +
+                            augmentedCostFunction(path[i], path[j + 1])
+                } else if (i == n - 1) {
+                    edgeWeightToRemove = augmentedCostFunction(path[i - 1], path[i]) +
+                            augmentedCostFunction(path[i], path[j])
+
+                    modifiedEdgeWeights = augmentedCostFunction(path[i - 1], path[n]) +
+                            augmentedCostFunction(path[n], path[i])
+                }
+            } else {
+                if (i == 0 && j == n) {
+                    edgeWeightToRemove = augmentedCostFunction(path[0], path[1]) +
+                            augmentedCostFunction(path[n - 1], path[n])
+
+                    modifiedEdgeWeights = augmentedCostFunction(path[n], path[1]) +
+                            augmentedCostFunction(path[n - 1], path[0])
+                } else if (i == 0 && j > 1 && j < n) {
+                    edgeWeightToRemove = augmentedCostFunction(path[0], path[1]) +
+                            augmentedCostFunction(path[j - 1], path[j]) +
+                            augmentedCostFunction(path[j], path[j + 1])
+
+                    modifiedEdgeWeights = augmentedCostFunction(path[j], path[1]) +
+                            augmentedCostFunction(path[j - 1], path[0]) +
+                            augmentedCostFunction(path[0], path[j + 1])
+                } else if (i > 0 && i < n - 1 && j == n) {
+                    edgeWeightToRemove = augmentedCostFunction(path[i - 1], path[i]) +
+                            augmentedCostFunction(path[i], path[i + 1]) +
+                            augmentedCostFunction(path[n - 1], path[n])
+
+                    modifiedEdgeWeights = augmentedCostFunction(path[i - 1], path[n]) +
+                            augmentedCostFunction(path[n], path[i + 1]) +
+                            augmentedCostFunction(path[n - 1], path[i])
+                } else {
+                    edgeWeightToRemove = augmentedCostFunction(path[i - 1], path[i]) +
+                            augmentedCostFunction(path[i], path[i + 1]) +
+                            augmentedCostFunction(path[j - 1], path[j]) +
+                            augmentedCostFunction(path[j], path[j + 1])
+
+                    modifiedEdgeWeights = augmentedCostFunction(path[i - 1], path[j]) +
+                            augmentedCostFunction(path[j], path[i + 1]) +
+                            augmentedCostFunction(path[j - 1], path[i]) +
+                            augmentedCostFunction(path[i], path[j + 1])
+                }
+            }
+            pathWeightSum -= edgeWeightToRemove
+            pathWeightSum += modifiedEdgeWeights
+        }
 
         return pathWeightSum / normalizer()
     }
 
-     // FIXME: quitar esto, pero solo es para las pruebas
+    // FIXME: quitar esto, pero solo es para las pruebas
     fun costFunction(l: ArrayList<Int>): Double {
 
         var pathWeightSum = 0.0

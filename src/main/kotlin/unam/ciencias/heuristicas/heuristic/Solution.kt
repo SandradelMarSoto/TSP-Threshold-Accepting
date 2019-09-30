@@ -1,5 +1,7 @@
 package unam.ciencias.heuristicas.heuristic
 
+import kotlin.math.max
+import kotlin.math.min
 import kotlin.random.Random
 
 /**
@@ -10,18 +12,31 @@ import kotlin.random.Random
 class Solution(val path: ArrayList<Int>, private val random: Random) {
 
     /**
+     *
+     */
+    var swappedIndices: Pair<Int, Int>? = null
+
+    /**
      * TODO
-     * FIXME: Improve it.
      *
      * @return
      */
     fun generateNeighbor(): Solution {
-        val n = path.size
+        val uIndex: Int
+        var vIndex: Int
 
-        val uIndex = (0 until n).random(this.random)
-        var vIndex = (0 until n).random(this.random)
-        while (uIndex == vIndex)
+        if (swappedIndices == null) {
+            val n = path.size
+
+            uIndex = (0 until n).random(this.random)
             vIndex = (0 until n).random(this.random)
+            while (uIndex == vIndex)
+                vIndex = (0 until n).random(this.random)
+
+        } else {
+            uIndex = swappedIndices!!.first
+            vIndex = swappedIndices!!.second
+        }
 
         val newPath = ArrayList(path)
 
@@ -30,6 +45,29 @@ class Solution(val path: ArrayList<Int>, private val random: Random) {
         newPath[vIndex] = auxIndex
 
         return Solution(newPath, this.random)
+    }
+
+    /**
+     * TODO
+     *
+     */
+    fun initializeNeighborIndices() {
+        val n = path.size
+
+        val i = (0 until n).random(this.random)
+        var j = (0 until n).random(this.random)
+        while (i == j)
+            j = (0 until n).random(this.random)
+
+        swappedIndices = Pair(min(i, j), max(i, j))
+    }
+
+    /**
+     * TODO
+     *
+     */
+    fun clearNeighborIndices() {
+        swappedIndices = null
     }
 
 }

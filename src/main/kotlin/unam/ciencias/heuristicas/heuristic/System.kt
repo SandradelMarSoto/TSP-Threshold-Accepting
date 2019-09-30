@@ -76,6 +76,7 @@ class System(private val metrologist: Metrologist, private val random: Random) {
         val costFunction = { s: Solution -> metrologist.costFunction(s) }
         val graphSize = metrologist.inducedGraph.size()
 
+        // FIXME: ACCEPTED BATCH
         for (i in 0 until graphSize) {
             val neighbor = solution.generateNeighbor()
             if (costFunction(neighbor) <= costFunction(solution) + temperature) {

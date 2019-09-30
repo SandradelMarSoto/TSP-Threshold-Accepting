@@ -27,12 +27,14 @@ class Batch(
         var c = 0
         var r = 0.0
         while (c < L) {
-            // FIXME: No crear una nueva solución si no se va a ocupar.
-            val neighbor = solution.generateNeighbor()
-            if (metrologist.costFunction(neighbor) < metrologist.costFunction(solution) + temperature) {
-                solution = neighbor
+            solution.initializeNeighborIndices()
+
+            if (metrologist.costFunction(solution, true) < metrologist.costFunction(solution) + temperature) {
+                solution = solution.generateNeighbor()
                 c++
-                r += metrologist.costFunction(neighbor)
+                r += metrologist.costFunction(solution)
+            } else {
+                solution.clearNeighborIndices()
             }
         }
         return Pair(r / L, solution)
