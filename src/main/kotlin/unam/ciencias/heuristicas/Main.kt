@@ -27,8 +27,7 @@ fun main(args: Array<String>) {
 
     for (seed in seeds) {
         println("Seed: $seed")
-        println("Max distance: ${metrologist.maxDistance()}")
-        println("Normalizer: ${metrologist.normalizer}")
+
         println()
 
         val tsp = TSP(metrologist, seed)
@@ -37,9 +36,15 @@ fun main(args: Array<String>) {
         println("Path: ${tsp.calculatePath()}")
         println("Evaluation: ${tsp.evaluation()}")
         println("Feasible: ${tsp.isFeasible()}")
+        println("---------------------------------------------\n")
     }
 }
 
+/**
+ * TODO
+ *
+ * @return
+ */
 fun initializeGraph(): Graph<Int, City> {
     val graph = Graph<Int, City>()
 

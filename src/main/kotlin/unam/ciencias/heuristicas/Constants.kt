@@ -24,7 +24,7 @@ class Constants {
         /** Number of cities 1092 */
         const val NUM_CITIES = 1092
         /** TODO */
-        const val ACCEPTED_NEIGHBORS = 100
+        const val ACCEPTED_NEIGHBORS = 40
 
 
     }

@@ -39,8 +39,8 @@ class TSP(private val metrologist: Metrologist, private val seed: Int) {
                     bestSolutionSoFar = Pair(system.solution, metrologist.costFunction(system.solution))
                     min = metrologist.costFunction(system.solution)
                 }
-                println(metrologist.costFunction(system.solution))
-                println(system.solution.path)
+                println("E: " + metrologist.costFunction(system.solution))
+                println("P: " + system.solution.path)
 
             }
             system.temperature *= Constants.PHI

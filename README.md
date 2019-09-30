@@ -17,16 +17,15 @@
 # Ejecución
 Se le tendrá que pasar un archivo con la lista de ciudades y otra con las semillas:
 ```bash
-$ ./gradlew run -Pcities=[FILE] -Pseeds=[FILE]
+$ ./gradlew run -Pcities=FILE -Pseeds=FILE
 ```
 Ejemplo:
 ```bash
-$ ./gradlew run -Pcities=examples/input/40-cities.txt -Pseeds=examples/input/seed_1.txt
-```
+$ ./gradlew run -Pcities=examples/input/40-cities.txt -Pseeds=examples/input/seeds_chidas.txt```
 
 Tiene un archivo para generar semillas y su ejecución es así:
 ```bash
-$ ./gradlew generateSeeds -Pn='[N]'
+$ ./gradlew generateSeeds -Pn='N'
 ```
 Ejemplo:
 ```bash
@@ -42,7 +41,11 @@ $ ./gradlew test
 
 
 # TODO
-Mejorar el readme
-Arreglar todos los FIXMEs del código
-Completar los TODOs
-Hacer un random paa todo el sistema
+- Mejorar el readme
+- Completar los TODOs
+- Hacerlo concurrente para cada semilla
+- Pasarle bandera para imprimir solo las evaluaciones para pasarla al gnuplot
+- Buscar plantilla para el articulo
+- Empezar el articulo
+- preguntarle al cnake los parámetros
+- ver porque tarda un chingo para 150
