@@ -1,6 +1,7 @@
 package unam.ciencias.heuristicas.heuristic
 
 import unam.ciencias.heuristicas.Constants
+import unam.ciencias.heuristicas.Constants.Companion.NUM_CITIES
 import unam.ciencias.heuristicas.algorithm.Metrologist
 import kotlin.math.abs
 import kotlin.random.Random
@@ -9,7 +10,7 @@ import kotlin.random.Random
  * Bunch of variables that are going to be stored and updated throughout the TSP heuristic.
  *
  * @property metrologist
- * @property seed no-op
+ * @property random
  */
 class System(private val metrologist: Metrologist, private val random: Random) {
 
@@ -73,15 +74,17 @@ class System(private val metrologist: Metrologist, private val random: Random) {
      */
     private fun acceptedPercentage(solution: Solution, temperature: Double): Double {
         var c = 0
-        val costFunction = { s: Solution -> metrologist.costFunction(s) }
         val graphSize = metrologist.inducedGraph.size()
 
-        // FIXME: ACCEPTED BATCH
-        for (i in 0 until graphSize) {
-            val neighbor = solution.generateNeighbor()
-            if (costFunction(neighbor) <= costFunction(solution) + temperature) {
+        for (i in 0 until NUM_CITIES) {
+            solution.initializeNeighborIndices()
+
+            if (metrologist.costFunction(solution, true) < metrologist.costFunction(solution) + temperature) {
+                this.solution = solution.generateNeighbor()
                 c++
-                this.solution = neighbor
+
+            } else {
+                solution.clearNeighborIndices()
             }
         }
         return c.toDouble() / graphSize

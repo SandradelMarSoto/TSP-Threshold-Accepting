@@ -22,6 +22,9 @@ class Constants {
         /** Probability */
         const val P = 0.85
 
+        /** Number of cities 1092 */
+        const val NUM_CITIES = 40
+
 
         /**
          * TODO
