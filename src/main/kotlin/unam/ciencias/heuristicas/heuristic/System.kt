@@ -1,7 +1,7 @@
 package unam.ciencias.heuristicas.heuristic
 
 import unam.ciencias.heuristicas.Constants
-import unam.ciencias.heuristicas.Constants.Companion.NUM_CITIES
+import unam.ciencias.heuristicas.Constants.Companion.ACCEPTED_NEIGHBORS
 import unam.ciencias.heuristicas.algorithm.Metrologist
 import kotlin.math.abs
 import kotlin.random.Random
@@ -76,7 +76,7 @@ class System(private val metrologist: Metrologist, private val random: Random) {
         var c = 0
         val graphSize = metrologist.inducedGraph.size()
 
-        for (i in 0 until NUM_CITIES) {
+        for (i in 0 until ACCEPTED_NEIGHBORS) {
             solution.initializeNeighborIndices()
 
             if (metrologist.costFunction(solution, true) < metrologist.costFunction(solution) + temperature) {

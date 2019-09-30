@@ -1,7 +1,7 @@
 package unam.ciencias.heuristicas
 
 /**
- * Static variables that use the our TSP system.
+ * Variables for tuning our TSP system.
  *
  */
 class Constants {
@@ -21,22 +21,11 @@ class Constants {
         const val EARTH_RADIUS_IN_METERS = 6373000.0
         /** Probability */
         const val P = 0.85
-
         /** Number of cities 1092 */
-        const val NUM_CITIES = 40
+        const val NUM_CITIES = 1092
+        /** TODO */
+        const val ACCEPTED_NEIGHBORS = 100
 
-
-        /**
-         * TODO
-         *
-         * @return
-         */
-        fun randomPercentage(): Double {
-            var aux = Math.random()
-            while (aux !in 0.85..0.95)
-                aux = Math.random()
-            return aux
-        }
 
     }
 }

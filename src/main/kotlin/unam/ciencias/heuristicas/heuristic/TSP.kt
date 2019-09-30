@@ -14,12 +14,14 @@ class TSP(private val metrologist: Metrologist, private val seed: Int) {
 
     private val random = Random(seed)
     private val system = System(metrologist, random)
+    lateinit var bestSolutionSoFar: Pair<Solution, Double>
 
     /**
      * TODO
      *
      */
     fun thresholdAccepting() {
+        var min = Double.MAX_VALUE
 
         var p = 0.0
         while (system.temperature > Constants.EPSILON) {
@@ -33,39 +35,37 @@ class TSP(private val metrologist: Metrologist, private val seed: Int) {
                 p = newAcceptedPercentage
                 system.solution = s
 
-                println(system.solution.path)
+                if (min > metrologist.costFunction(system.solution)) {
+                    bestSolutionSoFar = Pair(system.solution, metrologist.costFunction(system.solution))
+                    min = metrologist.costFunction(system.solution)
+                }
                 println(metrologist.costFunction(system.solution))
+                println(system.solution.path)
+
             }
-            println(">>"+ system.temperature)
             system.temperature *= Constants.PHI
         }
     }
 
     /**
-     * FIXME
+     * TODO
      *
      * @return
      */
-    fun calculatePath(): ArrayList<Int> {
-        return arrayListOf()
-    }
+    fun calculatePath(): ArrayList<Int> = bestSolutionSoFar.first.path
 
     /**
-     * FIXME
+     * TODO
      *
      * @return
      */
-    fun evaluation(): Double {
-        return 0.0
-    }
+    fun evaluation(): Double = bestSolutionSoFar.second
 
     /**
-     * FIXME
+     * TODO
      *
      * @return
      */
-    fun isFeasible(): Boolean {
-        return false
-    }
+    fun isFeasible(): Boolean = bestSolutionSoFar.second <= 1
 
 }

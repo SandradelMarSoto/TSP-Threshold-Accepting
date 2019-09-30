@@ -27,7 +27,6 @@ fun main(args: Array<String>) {
 
     for (seed in seeds) {
         println("Seed: $seed")
-        //println("Evaluation: ${metrologist.costFunction(Solution(citiesIds))}")
         println("Max distance: ${metrologist.maxDistance()}")
         println("Normalizer: ${metrologist.normalizer}")
         println()
