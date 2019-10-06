@@ -74,8 +74,6 @@ class System(private val metrologist: Metrologist, private val random: Random) {
      */
     private fun acceptedPercentage(solution: Solution, temperature: Double): Double {
         var c = 0
-        val graphSize = metrologist.inducedGraph.size()
-
         for (i in 0 until ACCEPTED_NEIGHBORS) {
             solution.initializeNeighborIndices()
 
@@ -87,7 +85,7 @@ class System(private val metrologist: Metrologist, private val random: Random) {
                 solution.clearNeighborIndices()
             }
         }
-        return c.toDouble() / graphSize
+        return c.toDouble() / ACCEPTED_NEIGHBORS
     }
 
     /**
