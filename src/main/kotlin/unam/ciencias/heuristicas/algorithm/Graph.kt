@@ -45,14 +45,6 @@ class Graph<T, E> {
         if (hasEdge(a, b)) nodes[a]!!.neighbors!![b]
         else null
 
-    fun existSuchPath(path: ArrayList<T>): Boolean {
-        for (i in 0 until path.size - 1) {
-            if (!hasEdge(path[i], path[i + 1]))
-                return false
-        }
-        return true
-    }
-
     fun inducedGraph(verticesSubSet: Collection<T>): Graph<T, E> {
         val graph = Graph<T, E>()
 

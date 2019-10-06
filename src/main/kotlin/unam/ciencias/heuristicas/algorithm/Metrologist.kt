@@ -128,20 +128,6 @@ class Metrologist(
     /**
      * TODO
      *
-     * @param l
-     * @return
-     */
-    fun costFunction(l: ArrayList<Int>): Double {
-        var pathWeightSum = 0.0
-        for (i in 0 until l.size - 1)
-            pathWeightSum += augmentedCostFunction(l[i], l[i + 1])
-
-        return pathWeightSum / normalizer
-    }
-
-    /**
-     * TODO
-     *
      * @return
      */
     private fun normalizer(): Double {

@@ -1,14 +1,12 @@
 package unam.ciencias.heuristicas.data
 
+import unam.ciencias.heuristicas.Constants.Companion.DB_URL
 import unam.ciencias.heuristicas.model.City
 import unam.ciencias.heuristicas.model.CityConnection
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.SQLException
 import java.sql.Statement
-
-// FIXME: dynamic path for the db.
-private const val dbUrl = "jdbc:sqlite:db/tsp.db"
 
 /**
  * TODO
@@ -24,7 +22,7 @@ class DbConnector {
             val statement: Statement?
 
             try {
-                connection = DriverManager.getConnection(dbUrl)
+                connection = DriverManager.getConnection(DB_URL)
                 connection.autoCommit = false
 
                 statement = connection.createStatement()
@@ -58,7 +56,7 @@ class DbConnector {
             val statement: Statement?
 
             try {
-                connection = DriverManager.getConnection(dbUrl)
+                connection = DriverManager.getConnection(DB_URL)
                 connection.autoCommit = false
 
                 statement = connection.createStatement()

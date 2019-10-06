@@ -5,8 +5,10 @@ import org.spekframework.spek2.style.gherkin.Feature
 import unam.ciencias.heuristicas.algorithm.Graph
 import unam.ciencias.heuristicas.algorithm.Metrologist
 import unam.ciencias.heuristicas.data.DbConnector
+import unam.ciencias.heuristicas.heuristic.Solution
 import unam.ciencias.heuristicas.model.City
 import java.io.File
+import kotlin.random.Random
 import kotlin.test.assertTrue
 
 
@@ -64,8 +66,10 @@ object TspTest : Spek({
 
                 And("Must be the same cost function") {
                     val costFunctionWithLessPrecision = String.format("%.7f", costFunction).toDouble()
+
+                    val solution = Solution(citiesIds, Random(1))
                     val tspCostFunctionWithLessPrecision =
-                        String.format("%.7f", metrologist.costFunction(citiesIds)).toDouble()
+                        String.format("%.7f", metrologist.costFunction(solution)).toDouble()
 
                     assertTrue { tspCostFunctionWithLessPrecision == costFunctionWithLessPrecision }
 

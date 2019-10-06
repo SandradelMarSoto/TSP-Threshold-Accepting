@@ -1,6 +1,7 @@
 package unam.ciencias.heuristicas.heuristic
 
 import unam.ciencias.heuristicas.Constants.Companion.L
+import unam.ciencias.heuristicas.Constants.Companion.MAX_ITERATIONS
 import unam.ciencias.heuristicas.algorithm.Metrologist
 
 
@@ -26,7 +27,8 @@ class Batch(
     fun calculateBatch(): Pair<Double, Solution> {
         var c = 0
         var r = 0.0
-        while (c < L) {
+        var i = 0
+        while (c < L && i++ < MAX_ITERATIONS) {
             solution.initializeNeighborIndices()
 
             if (metrologist.costFunction(solution, true) < metrologist.costFunction(solution) + temperature) {
