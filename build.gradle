@@ -67,3 +67,12 @@ task generateSeeds(type: JavaExec) {
         args findProperty('n')
     }
 }
+
+task parseIds(type: JavaExec) {
+    main = "unam.ciencias.heuristicas.IdsParser"
+    classpath = sourceSets.main.runtimeClasspath
+
+    if (project.hasProperty("file")) {
+        args findProperty('file')
+    }
+}

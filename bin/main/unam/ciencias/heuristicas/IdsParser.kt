@@ -29,14 +29,14 @@ import java.io.File
 
 fun main(args: Array<String>) {
     val rawIds = File(args[0]).readLines()[0]
-    val citiesIds = ArrayList(rawIds.split(",").map { it.toInt() })
+    val citiesIds = ArrayList(rawIds.split(", ").map { it.toInt() })
     val idsFromDb = getIdsFromDb()
 
     val ans = StringBuilder()
     ans.append("[")
     citiesIds.forEachIndexed { index, id ->
         ans.append("{lat: ${idsFromDb.getValue(id).latitude}, lng: ${idsFromDb.getValue(id).longitude}}")
-        if (index < citiesIds.size) {
+        if (index < citiesIds.size - 1) {
             ans.append(",")
         }
     }
