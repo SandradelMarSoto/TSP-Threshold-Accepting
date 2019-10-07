@@ -3,22 +3,37 @@ plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.3.41'
 }
 
+ext.kotlin_version = '1.3.41'
+ext.spek_version = '2.0.6'
+
 group 'unam.ciencias.heuristicas'
 version '1.0'
 
 repositories {
     mavenCentral()
+    jcenter()
 }
+
 apply plugin: 'kotlin'
 apply plugin: 'application'
 
-dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-    testImplementation("junit:junit:4.12")
+test {
+    useJUnitPlatform {
+        includeEngines 'spek2'
+    }
 }
 
-sourceSets {
-    main.kotlin.srcDirs += 'src/main/kotlin'
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    // SQLite
+    compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.28.0'
+
+    // Assertion
+    testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
+    // Spek2
+    testImplementation "org.spekframework.spek2:spek-dsl-jvm:$spek_version"
+    testRuntimeOnly "org.spekframework.spek2:spek-runner-junit5:$spek_version"
+    testRuntimeOnly "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 }
 
 compileKotlin {
@@ -28,4 +43,36 @@ compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
 
-mainClassName = "unam.ciencias.heuristicas.Test"
+run {
+    // Configure Gradle to read from stdin
+    standardInput = System.in
+
+    // We must pass these as flags to read those files.
+    if (project.hasProperty("cities") && project.hasProperty("seeds") &&
+            project.hasProperty("printBestSols")) {
+        args findProperty('cities')
+        args findProperty('seeds')
+        args findProperty('printBestSols')
+    }
+}
+
+// Run this file as main
+mainClassName = "unam.ciencias.heuristicas.Main"
+
+task generateSeeds(type: JavaExec) {
+    main = "unam.ciencias.heuristicas.SeedGenerator"
+    classpath = sourceSets.main.runtimeClasspath
+
+    if (project.hasProperty("n")) {
+        args findProperty('n')
+    }
+}
+
+task parseIds(type: JavaExec) {
+    main = "unam.ciencias.heuristicas.IdsParser"
+    classpath = sourceSets.main.runtimeClasspath
+
+    if (project.hasProperty("file")) {
+        args findProperty('file')
+    }
+}
