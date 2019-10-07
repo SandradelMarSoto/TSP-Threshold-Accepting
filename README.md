@@ -6,7 +6,7 @@
 ![](/report/assets/img/xkdc-tsp.png)
 
 # Reporte
-El reporte del proyecto está [aquí](/report/template.pdf).
+El reporte del proyecto está [aquí](/report/report.pdf).
 
 ## Información del curso
 * Profesor: Canek Peláez Valdés
