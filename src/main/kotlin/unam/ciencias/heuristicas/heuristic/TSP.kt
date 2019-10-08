@@ -18,7 +18,7 @@ class TSP(
 
     private val random = Random(seed)
     private val system = System(metrologist, random)
-    lateinit var bestSolutionSoFar: Pair<Solution, Double>
+    private var bestSolutionSoFar: Pair<Solution, Double> = Pair(system.solution, metrologist.costFunction(system.solution))
 
     /**
      * TODO
